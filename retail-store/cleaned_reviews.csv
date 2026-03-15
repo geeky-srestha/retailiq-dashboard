@@ -1,0 +1,4 @@
+Clothing ID,Age,Rating,Review Text,sentiment,intent,Recommended IND,Department Name,timestamp
+767,30,5,the product is good,neutral,other,1,Tops,2026-03-13T23:28:43.732435
+767,30,2,hello this is good,neutral,other,0,Tops,2026-03-13T23:29:13.640812
+767,23,2,price is very high,neutral,other,0,Tops,2026-03-13T23:38:44.493613

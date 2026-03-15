@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>{{ product.name }} — QuantumWear</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Sans:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --bg:        #0a0a0b;
+  --surface:   #111113;
+  --surface2:  #18181c;
+  --border:    rgba(255,255,255,0.07);
+  --border2:   rgba(255,255,255,0.13);
+  --text:      #f0ede8;
+  --muted:     #6b6875;
+  --muted2:    #9996a3;
+  --accent:    #e8c547;
+  --accent2:   #5b8cf5;
+  --positive:  #4ade9a;
+  --negative:  #f76c6c;
+  --neutral:   #a0a0b0;
+  --mixed:     #f5a623;
+  --radius:    12px;
+  --radius-lg: 20px;
+}
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: 'Instrument Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.14;
+}
+.orb-1 { width: 600px; height: 600px; background: #5b8cf5; top: -200px; right: -150px; }
+.orb-2 { width: 400px; height: 400px; background: #e8c547; bottom: -100px; left: -100px; }
+
+/* ── Header ── */
+header {
+  position: sticky; top: 0; z-index: 10;
+  padding: 1.25rem 2.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  backdrop-filter: blur(12px);
+  background: rgba(10,10,11,0.7);
+}
+.brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+.brand-icon {
+  width: 34px; height: 34px;
+  background: var(--accent); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; color: #0a0a0b;
+}
+.brand-name {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: 1.1rem; letter-spacing: -0.01em; color: var(--text);
+}
+.brand-name span { color: var(--accent); }
+.back-btn {
+  font-size: 0.8rem; font-weight: 500;
+  color: var(--muted2); text-decoration: none;
+  border: 1px solid var(--border2); padding: 0.4rem 1rem;
+  border-radius: 100px; transition: border-color 0.2s, color 0.2s;
+}
+.back-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── Layout ── */
+main {
+  position: relative; z-index: 1;
+  max-width: 1100px; margin: 0 auto;
+  padding: 2.5rem 2rem 5rem;
+}
+
+/* ── Product Hero ── */
+.product-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3.5rem;
+}
+@media(max-width:768px){ .product-hero{ grid-template-columns:1fr; gap:1.5rem; } }
+
+.product-img-wrap {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border2);
+  background: var(--surface2);
+}
+.product-img-wrap img {
+  width: 100%; height: 420px;
+  object-fit: cover; display: block;
+}
+
+.product-info { display: flex; flex-direction: column; gap: 1rem; }
+.product-brand {
+  font-size: 0.7rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--muted);
+}
+.product-name {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: clamp(1.6rem, 3vw, 2rem);
+  letter-spacing: -0.03em; line-height: 1.1;
+}
+.product-price {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: 2rem; color: var(--accent); letter-spacing: -0.03em;
+}
+.product-desc { color: var(--muted2); font-size: 0.9rem; line-height: 1.7; }
+
+.rating-row {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 1rem; background: var(--surface2);
+  border: 1px solid var(--border2); border-radius: var(--radius);
+}
+.stars { color: var(--accent); font-size: 1rem; letter-spacing: 1px; }
+.rating-num {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: 1.2rem;
+}
+.rating-count { color: var(--muted2); font-size: 0.8rem; }
+
+.size-label { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.size-options { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.4rem; }
+.size-btn {
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--border2);
+  border-radius: 8px; background: none;
+  color: var(--text); cursor: pointer;
+  font-size: 0.8rem; font-family: inherit;
+  transition: border-color 0.2s, background 0.2s;
+}
+.size-btn:hover, .size-btn.active {
+  border-color: var(--accent); background: rgba(232,197,71,0.08); color: var(--accent);
+}
+
+/* ── Review Form ── */
+.section-title {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: 1.4rem; letter-spacing: -0.02em;
+  margin-bottom: 1.25rem;
+}
+.section-title em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--accent); }
+
+.review-form-card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+@media(max-width:600px){ .form-grid{ grid-template-columns:1fr; } }
+
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+.form-group label {
+  font-size: 0.72rem; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--muted2);
+}
+.form-group input, .form-group select, .form-group textarea {
+  background: var(--surface2); border: 1px solid var(--border2);
+  border-radius: var(--radius); color: var(--text);
+  padding: 0.7rem 0.9rem; font-family: inherit; font-size: 0.9rem;
+  outline: none; transition: border-color 0.2s;
+  resize: vertical;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  border-color: var(--accent);
+}
+.form-group select option { background: var(--surface2); }
+
+/* Star rating selector */
+.star-rating-input { display: flex; gap: 0.3rem; flex-direction: row-reverse; justify-content: flex-end; }
+.star-rating-input input { display: none; }
+.star-rating-input label {
+  font-size: 1.6rem; cursor: pointer; color: var(--muted);
+  text-transform: none; letter-spacing: 0; transition: color 0.15s;
+}
+.star-rating-input input:checked ~ label,
+.star-rating-input label:hover,
+.star-rating-input label:hover ~ label { color: var(--accent); }
+
+.submit-btn {
+  width: 100%; padding: 0.85rem;
+  background: var(--accent); color: #0a0a0b;
+  border: none; border-radius: var(--radius);
+  font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700;
+  letter-spacing: 0.04em; cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  margin-top: 1rem;
+}
+.submit-btn:hover { background: #f5d454; transform: translateY(-1px); }
+.submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+/* ── Sentiment Result Panel ── */
+#sentiment-result {
+  display: none;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-top: 1.25rem;
+  animation: slideIn 0.3s ease;
+}
+@keyframes slideIn {
+  from { opacity:0; transform:translateY(8px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.sentiment-header {
+  display: flex; align-items: center; gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.sentiment-badge {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.4rem 1rem; border-radius: 100px;
+  font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase;
+}
+.sentiment-badge.positive { background: rgba(74,222,154,0.12); color: var(--positive); border: 1px solid rgba(74,222,154,0.25); }
+.sentiment-badge.negative { background: rgba(247,108,108,0.12); color: var(--negative); border: 1px solid rgba(247,108,108,0.25); }
+.sentiment-badge.neutral  { background: rgba(160,160,176,0.12); color: var(--neutral);  border: 1px solid rgba(160,160,176,0.25); }
+.sentiment-badge.mixed    { background: rgba(245,166,35,0.12);  color: var(--mixed);   border: 1px solid rgba(245,166,35,0.25); }
+
+.intent-chip {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.35rem 0.8rem; border-radius: 100px;
+  background: rgba(91,140,245,0.1); color: var(--accent2);
+  border: 1px solid rgba(91,140,245,0.2);
+  font-size: 0.75rem; font-weight: 500;
+}
+
+.sentiment-meta { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+
+.powered-badge {
+  margin-left: auto;
+  font-size: 0.65rem; color: var(--muted);
+  display: flex; align-items: center; gap: 0.3rem;
+  background: var(--surface); border: 1px solid var(--border2);
+  padding: 0.25rem 0.6rem; border-radius: 6px;
+}
+.powered-badge svg { width:12px; height:12px; opacity:0.6; }
+
+.sentiment-summary {
+  color: var(--muted2); font-size: 0.88rem;
+  line-height: 1.6; margin-bottom: 0.9rem;
+  font-style: italic;
+}
+
+.confidence-row {
+  display: flex; align-items: center; gap: 0.75rem;
+  margin-bottom: 0.9rem;
+}
+.confidence-label { font-size: 0.72rem; color: var(--muted); white-space: nowrap; }
+.confidence-bar {
+  flex: 1; height: 5px; background: var(--border2);
+  border-radius: 99px; overflow: hidden;
+}
+.confidence-fill {
+  height: 100%; border-radius: 99px;
+  transition: width 0.6s ease;
+}
+.confidence-fill.positive { background: var(--positive); }
+.confidence-fill.negative { background: var(--negative); }
+.confidence-fill.neutral  { background: var(--neutral); }
+.confidence-fill.mixed    { background: var(--mixed); }
+.confidence-score { font-size: 0.75rem; font-weight: 600; color: var(--muted2); }
+
+.highlights-row { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.highlight-chip {
+  padding: 0.25rem 0.65rem;
+  background: rgba(232,197,71,0.06); color: var(--accent);
+  border: 1px solid rgba(232,197,71,0.18);
+  border-radius: 6px; font-size: 0.72rem;
+}
+
+/* ── Review Cards ── */
+.reviews-section { margin-top: 3rem; }
+
+.review-card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  position: relative;
+  transition: border-color 0.2s;
+}
+.review-card:hover { border-color: rgba(255,255,255,0.2); }
+
+.review-card-header {
+  display: flex; align-items: flex-start;
+  justify-content: space-between; gap: 1rem;
+  margin-bottom: 0.75rem; flex-wrap: wrap;
+}
+.reviewer-info { display: flex; flex-direction: column; gap: 0.2rem; }
+.reviewer-meta {
+  font-size: 0.75rem; color: var(--muted2);
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.reviewer-stars { color: var(--accent); font-size: 0.85rem; }
+
+.review-card-sentiment {
+  display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+}
+.review-sentiment-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+.review-sentiment-dot.positive { background: var(--positive); box-shadow: 0 0 6px var(--positive); }
+.review-sentiment-dot.negative { background: var(--negative); box-shadow: 0 0 6px var(--negative); }
+.review-sentiment-dot.neutral  { background: var(--neutral); }
+.review-sentiment-dot.mixed    { background: var(--mixed); box-shadow: 0 0 6px var(--mixed); }
+
+.review-sentiment-label {
+  font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+.review-sentiment-label.positive { color: var(--positive); }
+.review-sentiment-label.negative { color: var(--negative); }
+.review-sentiment-label.neutral  { color: var(--neutral); }
+.review-sentiment-label.mixed    { color: var(--mixed); }
+
+.review-text { color: var(--muted2); font-size: 0.88rem; line-height: 1.7; }
+.review-summary {
+  margin-top: 0.6rem; font-size: 0.78rem; font-style: italic;
+  color: var(--muted); padding-left: 0.75rem;
+  border-left: 2px solid var(--border2);
+}
+
+.no-reviews {
+  text-align: center; padding: 3rem 1rem;
+  color: var(--muted2); font-size: 0.9rem;
+  border: 1px dashed var(--border2); border-radius: var(--radius-lg);
+}
+
+/* ── Sentiment Overview ── */
+.sentiment-overview {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(120px,1fr));
+  gap: 1rem; margin-bottom: 2rem;
+}
+.sent-stat {
+  background: var(--surface); border: 1px solid var(--border2);
+  border-radius: var(--radius); padding: 1rem; text-align: center;
+}
+.sent-stat-count {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.6rem;
+}
+.sent-stat-count.positive { color: var(--positive); }
+.sent-stat-count.negative { color: var(--negative); }
+.sent-stat-count.neutral  { color: var(--neutral); }
+.sent-stat-count.mixed    { color: var(--mixed); }
+.sent-stat-label { font-size: 0.7rem; color: var(--muted); margin-top: 0.2rem; text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* Loading spinner */
+.spinner {
+  display: inline-block; width:14px; height:14px;
+  border: 2px solid rgba(10,10,11,0.3);
+  border-top-color: #0a0a0b; border-radius: 50%;
+  animation: spin 0.7s linear infinite; vertical-align: middle;
+}
+@keyframes spin { to { transform:rotate(360deg); } }
+
+@media(max-width:600px){
+  main { padding: 1.5rem 1rem 4rem; }
+  header { padding: 1rem 1.25rem; }
+  .review-form-card { padding: 1.25rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<!-- ── Header ── -->
+<header>
+  <a class="brand" href="/">
+    <div class="brand-icon">✦</div>
+    <div class="brand-name">Quantum<span>Wear</span></div>
+  </a>
+  <a href="/" class="back-btn">← Back to Shop</a>
+</header>
+
+<main>
+
+  <!-- ── Product Hero ── -->
+  <div class="product-hero">
+    <div class="product-img-wrap">
+      <img src="{{ product.image }}" alt="{{ product.name }}"
+           onerror="this.style.background='#18181c'">
+    </div>
+    <div class="product-info">
+      <div class="product-brand">{{ product.brand }}</div>
+      <div class="product-name">{{ product.name }}</div>
+      <div class="product-price">{{ product.price }}</div>
+      <p class="product-desc">{{ product.description }}</p>
+
+      <div class="rating-row">
+        <div class="stars">
+          {% for i in range(5) %}
+            {% if avg_rating >= i + 1 %}★{% elif avg_rating > i %}★{% else %}☆{% endif %}
+          {% endfor %}
+        </div>
+        <div class="rating-num">{{ avg_rating }}</div>
+        <div class="rating-count">/ 5.0 &nbsp;·&nbsp; {{ review_count }} review{% if review_count != 1 %}s{% endif %}</div>
+      </div>
+
+      <div>
+        <div class="size-label">Select Size</div>
+        <div class="size-options">
+          {% for size in product.sizes %}
+          <button class="size-btn" onclick="selectSize(this)">{{ size }}</button>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Write a Review ── -->
+  <div class="review-form-card">
+    <div class="section-title">Write a <em>Review</em></div>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Your Age</label>
+        <input type="number" id="age" placeholder="e.g. 28" min="13" max="99" value="30">
+      </div>
+      <div class="form-group">
+        <label>Rating</label>
+        <div class="star-rating-input">
+          <input type="radio" id="s5" name="rating" value="5"><label for="s5" title="5">★</label>
+          <input type="radio" id="s4" name="rating" value="4"><label for="s4" title="4">★</label>
+          <input type="radio" id="s3" name="rating" value="3" checked><label for="s3" title="3">★</label>
+          <input type="radio" id="s2" name="rating" value="2"><label for="s2" title="2">★</label>
+          <input type="radio" id="s1" name="rating" value="1"><label for="s1" title="1">★</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group" style="margin-bottom:0">
+      <label>Your Review</label>
+      <textarea id="review-text" rows="4" placeholder="Tell us what you think about this product…"></textarea>
+    </div>
+
+    <button class="submit-btn" id="submit-btn" onclick="submitReview()">
+      Analyze &amp; Submit Review
+    </button>
+
+    <!-- ── Sentiment Result (shown after submit) ── -->
+    <div id="sentiment-result">
+      <div class="sentiment-header">
+        <div class="sentiment-meta">
+          <div class="sentiment-badge" id="sent-badge"></div>
+          <div class="intent-chip" id="sent-intent"></div>
+        </div>
+        <div class="powered-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
+          </svg>
+          Powered by Amazon Bedrock Nova Pro
+        </div>
+      </div>
+
+      <div class="sentiment-summary" id="sent-summary"></div>
+
+      <div class="confidence-row">
+        <div class="confidence-label">Confidence</div>
+        <div class="confidence-bar"><div class="confidence-fill" id="conf-fill" style="width:0%"></div></div>
+        <div class="confidence-score" id="conf-score">0%</div>
+      </div>
+
+      <div class="highlights-row" id="sent-highlights"></div>
+    </div>
+  </div>
+
+  <!-- ── Reviews Section ── -->
+  <div class="reviews-section">
+    <div class="section-title">Customer <em>Reviews</em></div>
+
+    {% if reviews %}
+    <!-- Sentiment Overview -->
+    {% set pos = reviews | selectattr('sentiment','equalto','positive') | list | length %}
+    {% set neg = reviews | selectattr('sentiment','equalto','negative') | list | length %}
+    {% set neu = reviews | selectattr('sentiment','equalto','neutral')  | list | length %}
+    {% set mix = reviews | selectattr('sentiment','equalto','mixed')    | list | length %}
+    <div class="sentiment-overview">
+      <div class="sent-stat">
+        <div class="sent-stat-count positive">{{ pos }}</div>
+        <div class="sent-stat-label">Positive</div>
+      </div>
+      <div class="sent-stat">
+        <div class="sent-stat-count negative">{{ neg }}</div>
+        <div class="sent-stat-label">Negative</div>
+      </div>
+      <div class="sent-stat">
+        <div class="sent-stat-count neutral">{{ neu }}</div>
+        <div class="sent-stat-label">Neutral</div>
+      </div>
+      <div class="sent-stat">
+        <div class="sent-stat-count mixed">{{ mix }}</div>
+        <div class="sent-stat-label">Mixed</div>
+      </div>
+    </div>
+
+    {% for review in reviews %}
+    <div class="review-card">
+      <div class="review-card-header">
+        <div class="reviewer-info">
+          <div class="reviewer-meta">
+            <span class="reviewer-stars">
+              {% for i in range(5) %}{% if loop.index <= review.Rating|int %}★{% else %}☆{% endif %}{% endfor %}
+            </span>
+            Age {{ review.Age }}
+            {% if review.timestamp %}
+              · {{ review.timestamp[:10] }}
+            {% endif %}
+          </div>
+        </div>
+        <div class="review-card-sentiment">
+          <div class="review-sentiment-dot {{ review.sentiment|lower }}"></div>
+          <div class="review-sentiment-label {{ review.sentiment|lower }}">{{ review.sentiment }}</div>
+          {% if review.intent and review.intent != 'other' %}
+          <div class="intent-chip">{{ review.intent | replace('_',' ') }}</div>
+          {% endif %}
+        </div>
+      </div>
+      <div class="review-text">{{ review['Review Text'] }}</div>
+      {% if review.summary %}
+      <div class="review-summary">{{ review.summary }}</div>
+      {% endif %}
+    </div>
+    {% endfor %}
+
+    {% else %}
+    <div class="no-reviews">
+      <div style="font-size:2rem;margin-bottom:0.5rem">✍️</div>
+      No reviews yet — be the first to share your thoughts!
+    </div>
+    {% endif %}
+  </div>
+
+</main>
+
+<script>
+function selectSize(btn) {
+  document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+const EMOJIS = { positive:'😊', negative:'😞', neutral:'😐', mixed:'🤔' };
+const INTENT_ICONS = {
+  compliment:'👍', complaint:'⚠️', return:'↩️',
+  size_issue:'📏', quality_issue:'🔍', other:'💬'
+};
+
+async function submitReview() {
+  const text   = document.getElementById('review-text').value.trim();
+  const age    = parseInt(document.getElementById('age').value) || 30;
+  const rating = parseInt(document.querySelector('input[name="rating"]:checked')?.value || 3);
+
+  if (!text) {
+    document.getElementById('review-text').style.borderColor = 'var(--negative)';
+    return;
+  }
+  document.getElementById('review-text').style.borderColor = '';
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Analyzing the Review…';
+
+  try {
+    const res  = await fetch('/submit-review', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ product_id: {{ product.id }}, review_text: text, age, rating })
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      showSentiment(data);
+      btn.innerHTML = '✓ Review Submitted!';
+      btn.style.background = 'var(--positive)';
+      setTimeout(() => location.reload(), 1000);
+    } else {
+      btn.disabled = false;
+      btn.innerHTML = 'Analyze &amp; Submit Review';
+    }
+  } catch(e) {
+    btn.disabled = false;
+    btn.innerHTML = 'Analyze &amp; Submit Review';
+    console.error(e);
+  }
+}
+
+function showSentiment(data) {
+  const sentiment = (data.sentiment || 'neutral').toLowerCase();
+  const panel = document.getElementById('sentiment-result');
+  panel.style.display = 'block';
+
+  // Badge
+  const badge = document.getElementById('sent-badge');
+  badge.textContent = `${EMOJIS[sentiment] || '💬'} ${sentiment}`;
+  badge.className = `sentiment-badge ${sentiment}`;
+
+  // Intent
+  const intentEl = document.getElementById('sent-intent');
+  const intent = (data.intent || 'other').toLowerCase();
+  intentEl.textContent = `${INTENT_ICONS[intent] || '💬'} ${intent.replace(/_/g,' ')}`;
+
+  // Summary
+  if (data.summary) {
+    document.getElementById('sent-summary').textContent = `"${data.summary}"`;
+  }
+
+  // Confidence bar
+  const score = data.score || 0;
+  const fill  = document.getElementById('conf-fill');
+  fill.className = `confidence-fill ${sentiment}`;
+  document.getElementById('conf-score').textContent = `${score}%`;
+  setTimeout(() => fill.style.width = `${score}%`, 80);
+
+  // Highlights
+  const hlWrap = document.getElementById('sent-highlights');
+  hlWrap.innerHTML = '';
+  (data.highlights || []).forEach(h => {
+    const chip = document.createElement('span');
+    chip.className = 'highlight-chip';
+    chip.textContent = h;
+    hlWrap.appendChild(chip);
+  });
+
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+</script>
+</body>
+</html>
