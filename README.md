@@ -219,13 +219,7 @@ streamlit run dashboard.py --server.port 8501
 
 | Metric | Score |
 |---|---|
-| Accuracy | XX% |
-| Precision | XX% |
-| Recall | XX% |
-| F1 Score | XX% |
-
-> Replace XX with your actual evaluation metrics from model training.
-
+| Accuracy | 86% |
 ---
 
 ## 📈 Scalability
@@ -243,25 +237,16 @@ Built with ❤️ at DAKSH 2026 — Amazon AI Hackathon
 
 | Name | Role |
 |---|---|
-| [Your Name] | ML Pipeline & SageMaker |
-| [Teammate 1] | Backend & EC2 |
-| [Teammate 2] | Streamlit Dashboard |
-| [Teammate 3] | Bedrock Integration |
+| Pranav D | ML Pipeline & SageMaker |
+| Sreshta kumar | Backend & EC2 |
+| Krithik | Streamlit Dashboard |
+| Prithvi iyer | Bedrock Integration |
 
 ---
 
 ## 📜 License
 
 MIT License — feel free to use, modify, and build on this project.
-
----
-
-## 🙏 Acknowledgements
-
-- [AWS SageMaker Documentation](https://docs.aws.amazon.com/sagemaker/)
-- [Amazon Bedrock Documentation](https://docs.aws.amazon.com/bedrock/)
-- [Streamlit Documentation](https://docs.streamlit.io/)
-- DAKSH 2026 Hackathon organizers
 
 ---
 
